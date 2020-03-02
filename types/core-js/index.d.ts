@@ -1,4 +1,4 @@
-// Type definitions for core-js 0.9
+// Type definitions for core-js 2.5
 // Project: https://github.com/zloirock/core-js/
 // Definitions by: Ron Buckton <https://github.com/rbuckton>, Michel Felipe <https://github.com/mfdeveloper>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
@@ -76,6 +76,16 @@ interface Map<K, V> {
 
 interface Set<T> {
     toJSON(): any;
+}
+
+// #############################################################################################
+// ECMAScript Proposal
+// Modules: esnext.array.last-item, and esnext.array.last-index
+// #############################################################################################
+
+interface Array<T> {
+    lastItem: T;
+    readonly lastIndex: number;
 }
 
 // #############################################################################################
@@ -316,30 +326,14 @@ interface ObjectConstructor {
 }
 
 // #############################################################################################
-// Console - https://github.com/zloirock/core-js/#console
-// Modules: core.log
-// #############################################################################################
-
-interface Log extends Console {
-    (message?: any, ...optionalParams: any[]): void;
-    enable(): void;
-    disable(): void;
-}
-
-/**
- * Non-standard.
- */
-declare var log: Log;
-
-// #############################################################################################
 // Dict - https://github.com/zloirock/core-js/#dict
 // Modules: core.dict
 // #############################################################################################
 
 interface Dict<T> {
-    [key: string]: T;
-    [key: number]: T;
-    // [key: symbol]: T;
+    [key: string]: T | undefined;
+    [key: number]: T | undefined;
+    // [key: symbol]: T | undefined;
 }
 
 interface DictConstructor {
@@ -350,12 +344,12 @@ interface DictConstructor {
     <T>(value?: Dict<T>): Dict<T>;
     (value?: any): Dict<any>;
 
-    isDict(value: any): boolean;
+    isDict(value: any): value is Dict<any>;
     values<T>(object: Dict<T>): IterableIterator<T>;
     keys<T>(object: Dict<T>): IterableIterator<PropertyKey>;
     entries<T>(object: Dict<T>): IterableIterator<[PropertyKey, T]>;
     has<T>(object: Dict<T>, key: PropertyKey): boolean;
-    get<T>(object: Dict<T>, key: PropertyKey): T;
+    get<T>(object: Dict<T>, key: PropertyKey): T | undefined;
     set<T>(object: Dict<T>, key: PropertyKey, value: T): Dict<T>;
     forEach<T>(object: Dict<T>, callbackfn: (value: T, key: PropertyKey, dict: Dict<T>) => void, thisArg?: any): void;
     map<T, U>(object: Dict<T>, callbackfn: (value: T, key: PropertyKey, dict: Dict<T>) => U, thisArg?: any): Dict<U>;
@@ -363,7 +357,7 @@ interface DictConstructor {
     filter<T>(object: Dict<T>, callbackfn: (value: T, key: PropertyKey, dict: Dict<T>) => boolean, thisArg?: any): Dict<T>;
     some<T>(object: Dict<T>, callbackfn: (value: T, key: PropertyKey, dict: Dict<T>) => boolean, thisArg?: any): boolean;
     every<T>(object: Dict<T>, callbackfn: (value: T, key: PropertyKey, dict: Dict<T>) => boolean, thisArg?: any): boolean;
-    find<T>(object: Dict<T>, callbackfn: (value: T, key: PropertyKey, dict: Dict<T>) => boolean, thisArg?: any): T;
+    find<T>(object: Dict<T>, callbackfn: (value: T, key: PropertyKey, dict: Dict<T>) => boolean, thisArg?: any): T | undefined;
     findKey<T>(object: Dict<T>, callbackfn: (value: T, key: PropertyKey, dict: Dict<T>) => boolean, thisArg?: any): PropertyKey;
     keyOf<T>(object: Dict<T>, value: T): PropertyKey;
     includes<T>(object: Dict<T>, value: T): boolean;
@@ -755,8 +749,8 @@ declare namespace core {
         raw(template: TemplateStringsArray, ...substitutions: any[]): string;
         startsWith(text: string, searchString: string, position?: number): boolean;
         at(text: string, index: number): string;
-        lpad(text: string, length: number, fillStr?: string): string;
-        rpad(text: string, length: number, fillStr?: string): string;
+        padStart(text: string, length: number, fillStr?: string): string;
+        padEnd(text: string, length: number, fillStr?: string): string;
         escapeHTML(text: string): string;
         unescapeHTML(text: string): string;
     };
@@ -830,7 +824,6 @@ declare namespace core {
     const Symbol: SymbolConstructor;
     const Dict: DictConstructor;
     const global: any;
-    const log: Log;
     const _: boolean;
 
     function setTimeout(handler: any, timeout?: any, ...args: any[]): number;
@@ -900,10 +893,6 @@ declare module "core-js/core/global" {
     const global: typeof core.global;
     export = global;
 }
-declare module "core-js/core/log" {
-    const log: typeof core.log;
-    export = log;
-}
 declare module "core-js/core/number" {
     const Number: typeof core.Number;
     export = Number;
@@ -947,10 +936,6 @@ declare module "core-js/fn/global" {
 declare module "core-js/fn/is-iterable" {
     const isIterable: typeof core.isIterable;
     export = isIterable;
-}
-declare module "core-js/fn/log" {
-    const log: typeof core.log;
-    export = log;
 }
 declare module "core-js/fn/map" {
     const Map: typeof core.Map;
@@ -1454,9 +1439,13 @@ declare module "core-js/fn/string/includes" {
     const includes: typeof core.String.includes;
     export = includes;
 }
-declare module "core-js/fn/string/lpad" {
-    const lpad: typeof core.String.lpad;
-    export = lpad;
+declare module "core-js/fn/string/pad-end" {
+    const padEnd: typeof core.String.padEnd;
+    export = padEnd;
+}
+declare module "core-js/fn/string/pad-start" {
+    const padStart: typeof core.String.padStart;
+    export = padStart;
 }
 declare module "core-js/fn/string/raw" {
     const raw: typeof core.String.raw;
@@ -1465,10 +1454,6 @@ declare module "core-js/fn/string/raw" {
 declare module "core-js/fn/string/repeat" {
     const repeat: typeof core.String.repeat;
     export = repeat;
-}
-declare module "core-js/fn/string/rpad" {
-    const rpad: typeof core.String.rpad;
-    export = rpad;
 }
 declare module "core-js/fn/string/starts-with" {
     const startsWith: typeof core.String.startsWith;
@@ -1683,10 +1668,6 @@ declare module "core-js/library/core/global" {
     const global: typeof core.global;
     export = global;
 }
-declare module "core-js/library/core/log" {
-    const log: typeof core.log;
-    export = log;
-}
 declare module "core-js/library/core/number" {
     const Number: typeof core.Number;
     export = Number;
@@ -1730,10 +1711,6 @@ declare module "core-js/library/fn/global" {
 declare module "core-js/library/fn/is-iterable" {
     const isIterable: typeof core.isIterable;
     export = isIterable;
-}
-declare module "core-js/library/fn/log" {
-    const log: typeof core.log;
-    export = log;
 }
 declare module "core-js/library/fn/map" {
     const Map: typeof core.Map;
@@ -2273,9 +2250,13 @@ declare module "core-js/library/fn/string/includes" {
     const includes: typeof core.String.includes;
     export = includes;
 }
-declare module "core-js/library/fn/string/lpad" {
-    const lpad: typeof core.String.lpad;
-    export = lpad;
+declare module "core-js/library/fn/string/pad-end" {
+    const padEnd: typeof core.String.padEnd;
+    export = padEnd;
+}
+declare module "core-js/library/fn/string/pad-start" {
+    const padStart: typeof core.String.padStart;
+    export = padStart;
 }
 declare module "core-js/library/fn/string/raw" {
     const raw: typeof core.String.raw;
@@ -2284,10 +2265,6 @@ declare module "core-js/library/fn/string/raw" {
 declare module "core-js/library/fn/string/repeat" {
     const repeat: typeof core.String.repeat;
     export = repeat;
-}
-declare module "core-js/library/fn/string/rpad" {
-    const rpad: typeof core.String.rpad;
-    export = rpad;
 }
 declare module "core-js/library/fn/string/starts-with" {
     const startsWith: typeof core.String.startsWith;

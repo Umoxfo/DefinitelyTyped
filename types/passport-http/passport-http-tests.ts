@@ -4,6 +4,7 @@
 
 import passport = require("passport");
 import http = require("passport-http");
+import express = require("express");
 
 interface UserInterface {
     username: string;
@@ -23,6 +24,9 @@ function validateNonce(nonce: string) {
 
 function validateParams(nonce: string, cnonce: string, nc: number, opaque: string) {
 }
+
+new http.BasicStrategy({passReqToCallback: false}, (username, password, done) => {});
+new http.BasicStrategy({passReqToCallback: true}, (req, username, password, done) => {});
 
 passport.use(new http.BasicStrategy((username, password, done) => {
     User.findOne({
@@ -46,7 +50,7 @@ passport.use(new http.BasicStrategy((username, password, done) => {
 passport.use(new http.BasicStrategy({
     realm: "User",
     passReqToCallback: true,
-}, (req, username, password, done) => {
+}, (req: express.Request, username: string, password: string, done: (error: any, user?: any) => void) => {
     // with req when needed
 }));
 

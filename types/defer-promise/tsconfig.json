@@ -3,6 +3,7 @@
         "module": "commonjs",
         "lib": [
             "es5",
+            "es2015.iterable",
             "es2015.Promise"
         ],
         "noImplicitAny": true,
@@ -15,8 +16,7 @@
         ],
         "types": [],
         "noEmit": true,
-        "forceConsistentCasingInFileNames": true,
-        "esModuleInterop": true
+        "forceConsistentCasingInFileNames": true
     },
     "files": [
         "index.d.ts",

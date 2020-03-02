@@ -51,7 +51,34 @@ const c: Configuration = {
 				to: 'directory/with/extension.ext',
 				toType: 'dir'
 			},
+
+			// transform and cache (cache is always used with transform option).
+			{
+				from: 'src/*.png',
+				to: 'dest/',
+				transform: (content, path) => content,
+				cache: true
+			},
+
+			// Copy glob results (without dot files) to {output}/to/directory/
+			{
+				from: '**/*.png',
+				to: 'to/directory'
+			},
+
+			// Turns 1st and 2nd level directory names into file name seperated by a dash for png files
+			{
+				from: '*/*',
+				to: '[1]-[2].[hash].[ext]',
+				test: /([^/]+)\/(.+)\.png$/,
+			},
 		], {
+			// Log only errors
+			logLevel: 'error',
+			
+			// All 'from' paths will be intepreted from this context
+			context: 'app/',
+
 			ignore: [
 				// Doesn't copy any files with a txt extension
 				'*.txt',

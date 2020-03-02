@@ -7,6 +7,7 @@
         ],
         "noImplicitAny": true,
         "noImplicitThis": true,
+        "noUnusedLocals": true,
         "strictNullChecks": true,
         "strictFunctionTypes": true,
         "baseUrl": "../",
@@ -16,8 +17,7 @@
         "types": [],
         "jsx": "react",
         "noEmit": true,
-        "forceConsistentCasingInFileNames": true,
-        "esModuleInterop": true
+        "forceConsistentCasingInFileNames": true
     },
     "files": [
         "index.d.ts",

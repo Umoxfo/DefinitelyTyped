@@ -16,12 +16,10 @@
         "types": [],
         "noEmit": true,
         "forceConsistentCasingInFileNames": true,
-        "esModuleInterop": true,
         "jsx": "react"
     },
     "files": [
         "index.d.ts",
-        "lib/components/Map.d.ts",
         "react-cartographer-tests.tsx"
     ]
 }

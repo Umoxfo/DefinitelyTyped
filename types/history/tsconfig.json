@@ -7,7 +7,7 @@
         ],
         "noImplicitAny": true,
         "noImplicitThis": true,
-        "strictNullChecks": false,
+        "strictNullChecks": true,
         "strictFunctionTypes": true,
         "baseUrl": "../",
         "typeRoots": [
@@ -15,19 +15,10 @@
         ],
         "types": [],
         "noEmit": true,
-        "forceConsistentCasingInFileNames": true,
-        "esModuleInterop": true
+        "forceConsistentCasingInFileNames": true
     },
     "files": [
         "index.d.ts",
-        "history-tests.ts",
-        "createBrowserHistory.d.ts",
-        "createMemoryHistory.d.ts",
-        "createHashHistory.d.ts",
-        "createTransitionManager.d.ts",
-        "DOMUtils.d.ts",
-        "ExecutionEnvironment.d.ts",
-        "LocationUtils.d.ts",
-        "PathUtils.d.ts"
+        "history-tests.ts"
     ]
 }

@@ -7,7 +7,7 @@
             "dom"
         ],
         "strictNullChecks": true,
-        "strictFunctionTypes": false,
+        "strictFunctionTypes": true,
         "noImplicitAny": true,
         "noImplicitThis": true,
         "baseUrl": "../",
@@ -17,7 +17,6 @@
         "types": [],
         "noEmit": true,
         "forceConsistentCasingInFileNames": true,
-        "esModuleInterop": true,
         "experimentalDecorators": true
     },
     "files": [

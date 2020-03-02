@@ -2,6 +2,7 @@
     "compilerOptions": {
         "module": "commonjs",
         "lib": [
+            "dom",
             "es6"
         ],
         "noImplicitAny": true,
@@ -10,15 +11,10 @@
         "strictFunctionTypes": true,
         "baseUrl": "../",
         "jsx": "react",
-        "typeRoots": [
-            "../"
-        ],
+        "typeRoots": ["../"],
         "paths": {
             "@storybook/addon-info": [
                 "storybook__addon-info"
-            ],
-            "@storybook/react": [
-                "storybook__react"
             ]
         },
         "types": [],

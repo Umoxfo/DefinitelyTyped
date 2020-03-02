@@ -15,7 +15,6 @@
         "types": [],
         "noEmit": true,
         "forceConsistentCasingInFileNames": true,
-        "esModuleInterop": true,
         "paths": {
             "@feathersjs/errors": [
                 "feathersjs__errors"
@@ -30,8 +29,6 @@
     },
     "files": [
         "index.d.ts",
-        "feathersjs__errors-tests.ts",
-        "handler.d.ts",
-        "not-found.d.ts"
+        "feathersjs__errors-tests.ts"
     ]
 }

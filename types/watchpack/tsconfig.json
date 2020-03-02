@@ -14,13 +14,10 @@
         ],
         "types": [],
         "noEmit": true,
-        "forceConsistentCasingInFileNames": true,
-        "esModuleInterop": true
+        "forceConsistentCasingInFileNames": true
     },
     "files": [
         "index.d.ts",
-        "DirectoryWatcher.d.ts",
-        "Watcher.d.ts",
         "watchpack-tests.ts"
     ]
 }

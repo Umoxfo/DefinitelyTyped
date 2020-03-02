@@ -23,13 +23,10 @@
         },
         "types": [],
         "noEmit": true,
-        "forceConsistentCasingInFileNames": true,
-        "esModuleInterop": true
+        "forceConsistentCasingInFileNames": true
     },
     "files": [
         "index.d.ts",
-        "CSSTransitionGroup.d.ts",
-        "TransitionGroup.d.ts",
         "react-transition-group-tests.tsx"
     ]
 }

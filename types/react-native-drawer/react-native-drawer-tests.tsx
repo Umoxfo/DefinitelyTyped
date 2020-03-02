@@ -1,19 +1,11 @@
 import * as React from 'react';
-import {
-  ScaledSize,
-  StyleSheet,
-  View,
-  ViewStyle
-} from 'react-native';
+import { Button, ScaledSize, View } from 'react-native';
 import Drawer from 'react-native-drawer';
 
 class DrawerTest extends React.Component<{}, {open: boolean}> {
-    constructor(props: {}) {
-      super(props);
-      this.state = {
+    state = {
         open: true
-      };
-    }
+    };
 
     render() {
         return (
@@ -25,6 +17,9 @@ class DrawerTest extends React.Component<{}, {open: boolean}> {
               onClose={this.onClose}
               closedDrawerOffset={100}
               openDrawerOffset={(viewport: ScaledSize) => 50}
+              side={ "bottom" }
+              acceptPanOnDrawer={ true }
+              onDragStart={ () => {} }
             >
             </Drawer>
         );
@@ -38,3 +33,13 @@ class DrawerTest extends React.Component<{}, {open: boolean}> {
       this.setState({open: false});
     }
 }
+
+const DrawerTest2: React.FC = () => {
+    const ref = React.useRef<Drawer>(null);
+
+    return (
+        <Drawer ref={ref}>
+            <Button title='Close' onPress={() => ref.current!.close()} />
+        </Drawer>
+    );
+};

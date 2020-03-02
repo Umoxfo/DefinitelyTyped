@@ -42,6 +42,7 @@ class ReactGeosuggest extends React.Component {
                     fixtures={fixtures}
                     getSuggestLabel={getSuggestLabel}
                     highlightMatch={true}
+                    ignoreEnter={true}
                     ignoreTab={true}
                     initialValue="Hamburg"
                     inputClassName="inputClassName"
@@ -67,8 +68,8 @@ class ReactGeosuggest extends React.Component {
                     style={styles}
                     suggestsClassName="suggestsClassName"
                     suggestsHiddenClassName="suggestsHiddenClassName"
-                    suggestsItemActiveClassName="suggestsItemActiveClassName"
-                    suggestsItemClassName="suggestsItemClassName"
+                    suggestItemActiveClassName="suggestItemActiveClassName"
+                    suggestItemClassName="suggestItemClassName"
                     types={["geocode", "(regions)"]}
                 />
 

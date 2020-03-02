@@ -8,7 +8,7 @@
         "noImplicitAny": true,
         "noImplicitThis": true,
         "strictNullChecks": true,
-        "strictFunctionTypes": false,
+        "strictFunctionTypes": true,
         "baseUrl": "../../",
         "typeRoots": [
             "../../"
@@ -20,8 +20,7 @@
             ]
         },
         "noEmit": true,
-        "forceConsistentCasingInFileNames": true,
-        "esModuleInterop": true
+        "forceConsistentCasingInFileNames": true
     },
     "files": [
         "index.d.ts"

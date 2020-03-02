@@ -5,6 +5,8 @@ class AuthService extends Ember.Service {
 }
 
 class ApplicationController extends Ember.Controller {
+    model = {};
+    string: string;
     transitionToLogin() {}
 }
 
@@ -28,6 +30,11 @@ class LoginRoute extends Ember.Route {
         if (!this.get('auth').get('isAuthenticated')) {
             this.get('application').transitionToLogin();
         }
+    }
+
+    anyOldMethod() {
+        this.get('application').set('string', 'must be a string');
+        this.controllerFor('application'); // $ExpectType Controller
     }
 }
 

@@ -12,11 +12,10 @@
         ],
         "jsx": "react",
         "strictNullChecks": true,
-        "strictFunctionTypes": false,
+        "strictFunctionTypes": true,
         "noImplicitAny": true,
         "noImplicitThis": true,
         "forceConsistentCasingInFileNames": true,
-        "esModuleInterop": true,
         "noEmit": true
     },
     "files": [

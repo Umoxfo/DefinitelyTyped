@@ -9,6 +9,9 @@
             "react": [
                 "react/v15"
             ],
+            "react-dom": [
+                "react-dom/v15"
+            ],
             "react-test-renderer": [
                 "react-test-renderer/v15"
             ]
@@ -23,12 +26,10 @@
         ],
         "types": [],
         "noEmit": true,
-        "forceConsistentCasingInFileNames": true,
-        "esModuleInterop": true
+        "forceConsistentCasingInFileNames": true
     },
     "files": [
         "index.d.ts",
-        "shallow/index.d.ts",
         "react-test-renderer-tests.ts"
     ]
 }

@@ -16,13 +16,10 @@
         "types": [],
         "noEmit": true,
         "forceConsistentCasingInFileNames": true,
-        "esModuleInterop": true,
         "jsx": "react"
     },
     "files": [
         "cleave.js-tests.tsx",
-        "index.d.ts",
-        "options.d.ts",
-        "react/index.d.ts"
+        "index.d.ts"
     ]
 }

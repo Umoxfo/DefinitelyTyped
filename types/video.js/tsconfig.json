@@ -15,11 +15,12 @@
         ],
         "types": [],
         "noEmit": true,
-        "forceConsistentCasingInFileNames": true,
-        "esModuleInterop": true
+        "forceConsistentCasingInFileNames": true
     },
     "files": [
         "index.d.ts",
+        "test/plugin-tests.ts",
+        "test/videojs-alt-distributions-tests.ts",
         "video.js-tests.ts"
     ]
 }

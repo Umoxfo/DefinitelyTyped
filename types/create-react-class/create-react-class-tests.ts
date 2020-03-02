@@ -11,7 +11,7 @@ interface State {
     bar: number;
 }
 
-const props: Props & React.ClassAttributes<{}> = {
+const props: Props = {
     foo: "foo"
 };
 
@@ -76,6 +76,12 @@ const ClassicComponent: React.ClassicComponentClass<Props> = createReactClass<Pr
 const ClassicComponentNoProps: React.ClassicComponentClass = createReactClass({
     render() {
         return DOM.div();
+    }
+});
+
+const ClassicComponentNoState: React.ClassicComponentClass<{ text: string }> = createReactClass<{ text: string }>({
+    render() {
+        return DOM.div(this.props.text);
     }
 });
 

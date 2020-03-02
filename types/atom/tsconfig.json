@@ -15,14 +15,10 @@
         ],
         "types": [],
         "noEmit": true,
-        "forceConsistentCasingInFileNames": true,
-        "esModuleInterop": true
+        "forceConsistentCasingInFileNames": true
     },
     "files": [
         "index.d.ts",
-        "atom-tests.ts",
-        "autocomplete-plus/index.d.ts",
-        "linter/index.d.ts",
-        "status-bar/index.d.ts"
+        "atom-tests.ts"
     ]
 }

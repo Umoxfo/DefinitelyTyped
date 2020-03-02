@@ -7,7 +7,7 @@
         ],
         "noImplicitAny": true,
         "noImplicitThis": true,
-        "strictNullChecks": false,
+        "strictNullChecks": true,
         "baseUrl": "../",
         "typeRoots": [
             "../"
@@ -15,7 +15,6 @@
         "types": [],
         "noEmit": true,
         "forceConsistentCasingInFileNames": true,
-        "esModuleInterop": true,
         "strictFunctionTypes": true
     },
     "files": [

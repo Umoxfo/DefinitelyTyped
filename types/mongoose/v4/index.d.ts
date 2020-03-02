@@ -1,8 +1,12 @@
-// Type definitions for Mongoose 4.7.1
+// Type definitions for Mongoose 4.7.3
 // Project: http://mongoosejs.com/
-// Definitions by: simonxca <https://github.com/simonxca>, horiuchi <https://github.com/horiuchi>, sindrenm <https://github.com/sindrenm>, lukasz-zak <https://github.com/lukasz-zak>
+// Definitions by: simonxca <https://github.com/simonxca>
+//                 horiuchi <https://github.com/horiuchi>
+//                 lukasz-zak <https://github.com/lukasz-zak>
+//                 murbanowicz <https://github.com/murbanowicz>
+//                 Samuel Bodin <https://github.com/bodinsamuel>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
-// TypeScript Version: 2.3
+// TypeScript Version: 3.0
 
 /// <reference types="mongodb" />
 /// <reference types="node" />
@@ -173,7 +177,8 @@ declare module "mongoose" {
    * @param fn plugin callback
    * @param opts optional options
    */
-  export function plugin(fn: Function, opts?: any): typeof mongoose;
+  export function plugin(fn: Function): typeof mongoose;
+  export function plugin<T>(fn: Function, opts: T): typeof mongoose;
 
   /** Sets mongoose options */
   export function set(key: string, value: any): void;
@@ -211,7 +216,7 @@ declare module "mongoose" {
    * QueryStream can only be accessed using query#stream(), we only
    *   expose its interface here.
    */
-  interface QueryStream extends stream.Stream {
+  class QueryStream extends stream.Stream {
     /**
      * Provides a Node.js 0.8 style ReadStream interface for Queries.
      * @event data emits a single Mongoose document
@@ -226,7 +231,7 @@ declare module "mongoose" {
        */
       transform?: Function;
       [other: string]: any;
-    }): QueryStream;
+    });
 
     /**
      * Destroys the stream, closing the underlying cursor, which emits the close event.
@@ -327,6 +332,16 @@ declare module "mongoose" {
       schema?: Schema,
       collection?: string
     ): U;
+
+    /**
+     * Removes the model named `name` from this connection, if it exists. You can
+     * use this function to clean up any models you created in your tests to
+     * prevent OverwriteModelErrors.
+     *
+     * @param name if string, the name of the model to remove. If regexp, removes all models whose name matches the regexp.
+     * @returns this
+     */
+    deleteModel(name: string | RegExp): Connection;
 
     /** Returns an array of model names created on this connection. */
     modelNames(): string[];
@@ -536,7 +551,7 @@ declare module "mongoose" {
    * QueryCursor can only be accessed by query#cursor(), we only
    *   expose its interface to enable type-checking.
    */
-  interface QueryCursor<T extends Document> extends stream.Readable {
+  class QueryCursor<T extends Document> extends stream.Readable {
     /**
      * A QueryCursor is a concurrency primitive for processing query results
      * one document at a time. A QueryCursor fulfills the Node.js streams3 API,
@@ -550,7 +565,7 @@ declare module "mongoose" {
      * @event data Emitted when the stream is flowing and the next doc is ready
      * @event end Emitted when the stream is exhausted
      */
-    constructor(query: Query<T>, options: any): QueryCursor<T>;
+    constructor(query: Query<T>, options: any);
 
     /** Marks this cursor as closed. Will stop streaming and subsequent calls to next() will error. */
     close(callback?: (error: any, result: any) => void): Promise<any>;
@@ -678,7 +693,8 @@ declare module "mongoose" {
      * Registers a plugin for this schema.
      * @param plugin callback
      */
-    plugin(plugin: (schema: Schema, options?: any) => void, opts?: any): this;
+    plugin(plugin: (schema: Schema) => void): this;
+    plugin<T>(plugin: (schema: Schema, options: T) => void, opts: T): this;
 
     /**
      * Defines a post hook for the document
@@ -754,6 +770,8 @@ declare module "mongoose" {
     methods: any;
     /** Object of currently defined statics on this schema. */
     statics: any;
+    /** Object of currently defined query helpers on this schema. */
+    query: any;
     /** The original object passed to the schema constructor */
     obj: any;
   }
@@ -1164,7 +1182,7 @@ declare module "mongoose" {
      * @param pathsToValidate only validate the given paths
      * @returns MongooseError if there are errors during validation, or undefined if there is no error.
      */
-    validateSync(pathsToValidate?: string | string[]): Error;
+    validateSync(pathsToValidate?: string | string[]): Error | undefined;
 
     /** Hash containing current validation errors. */
     errors: any;
@@ -1261,7 +1279,7 @@ declare module "mongoose" {
 
       /**
        * Return the index of obj or -1 if not found.
-       * @param obj he item to look for
+       * @param obj The item to look for
        */
       indexOf(obj: any): number;
 
@@ -1600,9 +1618,12 @@ declare module "mongoose" {
     findOneAndUpdate(callback?: (err: any, doc: DocType | null) => void): DocumentQuery<DocType | null, DocType>;
     findOneAndUpdate(update: any,
       callback?: (err: any, doc: DocType | null, res: any) => void): DocumentQuery<DocType | null, DocType>;
-    findOneAndUpdate(query: any | Query<any>, update: any,
+    findOneAndUpdate(query: any, update: any,
       callback?: (err: any, doc: DocType | null, res: any) => void): DocumentQuery<DocType | null, DocType>;
-    findOneAndUpdate(query: any | Query<any>, update: any, options: QueryFindOneAndUpdateOptions,
+    findOneAndUpdate(query: any, update: any,
+      options: { upsert: true, new: true } & QueryFindOneAndUpdateOptions,
+      callback?: (err: any, doc: DocType, res: any) => void): DocumentQuery<DocType, DocType>;
+    findOneAndUpdate(query: any, update: any, options: QueryFindOneAndUpdateOptions,
       callback?: (err: any, doc: DocType | null, res: any) => void): DocumentQuery<DocType | null, DocType>;
 
     /**
@@ -1661,7 +1682,7 @@ declare module "mongoose" {
      * getters/setters or other Mongoose magic applied.
      * @param bool defaults to true
      */
-    lean(bool?: boolean): Query<object>;
+    lean(bool?: boolean | object): Query<object>;
 
     /** Specifies the maximum number of documents the query will return. Cannot be used with distinct() */
     limit(val: number): this;
@@ -2426,7 +2447,7 @@ declare module "mongoose" {
      *   Model#ensureIndexes. If an error occurred it is passed with the event.
      *   The fields, options, and index name are also passed.
      */
-    new(doc?: any): T;
+    new(doc?: Partial<T>): T;
 
     /**
      * Finds a single document by its _id field. findById(id) is almost*
@@ -2441,7 +2462,7 @@ declare module "mongoose" {
     findById(id: any | string | number, projection: any, options: any,
       callback?: (err: any, res: T | null) => void): DocumentQuery<T | null, T>;
 
-    model(name: string): Model<T>;
+      model<U extends Document>(name: string): Model<U>;
 
     /**
      * Creates a Query and specifies a $where condition.
@@ -2529,6 +2550,9 @@ declare module "mongoose" {
     findByIdAndUpdate(id: any | number | string, update: any,
       callback?: (err: any, res: T | null) => void): DocumentQuery<T | null, T>;
     findByIdAndUpdate(id: any | number | string, update: any,
+      options: { upsert: true, new: true } & ModelFindByIdAndUpdateOptions,
+      callback?: (err: any, res: T) => void): DocumentQuery<T, T>;
+    findByIdAndUpdate(id: any | number | string, update: any,
       options: ModelFindByIdAndUpdateOptions,
       callback?: (err: any, res: T | null) => void): DocumentQuery<T | null, T>;
 
@@ -2573,6 +2597,9 @@ declare module "mongoose" {
     findOneAndUpdate(): DocumentQuery<T | null, T>;
     findOneAndUpdate(conditions: any, update: any,
       callback?: (err: any, doc: T | null, res: any) => void): DocumentQuery<T | null, T>;
+    findOneAndUpdate(conditions: any, update: any,
+      options: { upsert: true, new: true } & ModelFindOneAndUpdateOptions,
+      callback?: (err: any, doc: T, res: any) => void): DocumentQuery<T, T>;
     findOneAndUpdate(conditions: any, update: any,
       options: ModelFindOneAndUpdateOptions,
       callback?: (err: any, doc: T | null, res: any) => void): DocumentQuery<T | null, T>;
@@ -2682,7 +2709,7 @@ declare module "mongoose" {
      * Returns another Model instance.
      * @param name model name
      */
-    model(name: string): Model<this>;
+    model<T extends Document>(name: string): Model<T>;
 
     /**
      * Removes this document from the db.
@@ -2730,7 +2757,7 @@ declare module "mongoose" {
      * If this is a discriminator model, baseModelName is the
      * name of the base model.
      */
-    baseModelName: String;
+    baseModelName: string | undefined;
 
     /** Collection the model uses. */
     collection: Collection;
@@ -2825,6 +2852,10 @@ declare module "mongoose" {
     strict?: boolean;
     /** disables update-only mode, allowing you to overwrite the doc (false) */
     overwrite?: boolean;
+    /**
+    * Only update elements that match the arrayFilters conditions in the document or documents that match the query conditions.
+    */
+    arrayFilters?: { [key: string]: any }[];
     /** other options */
     [other: string]: any;
   }

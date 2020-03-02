@@ -1,9 +1,6 @@
 {
     "files": [
-        "constants.d.ts",
-        "adapter.d.ts",
-        "index.d.ts",
-        "foundation.d.ts"
+        "index.d.ts"
     ],
     "compilerOptions": {
         "module": "commonjs",
@@ -22,7 +19,6 @@
         ],
         "types": [],
         "noEmit": true,
-        "forceConsistentCasingInFileNames": true,
-        "esModuleInterop": true
+        "forceConsistentCasingInFileNames": true
     }
 }

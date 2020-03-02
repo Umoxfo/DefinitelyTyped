@@ -14,11 +14,9 @@
         ],
         "types": [],
         "noEmit": true,
-        "forceConsistentCasingInFileNames": true,
-        "esModuleInterop": true
+        "forceConsistentCasingInFileNames": true
     },
     "files": [
-        "../async/index.d.ts",
         "index.d.ts",
         "i2c-bus-tests.ts"
     ]

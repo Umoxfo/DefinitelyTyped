@@ -14,10 +14,22 @@ const params: twig.Parameters = {
 	method: value,
 	name: value,
 	options: value,
-	url: value
+	href: value,
+	async: value
 };
 
 const temp: twig.Template = twig.twig(params);
+
+const result: string = temp.render();
+
+const async_result: string | Promise<string> = temp.render(undefined, undefined, true);
+
+function twig_async_param(b: boolean) {
+    const maybe_async_result: string | Promise<string> = temp.render(undefined, undefined, b);
+}
+
+twig_async_param(true);
+twig_async_param(false);
 
 const compOpts: twig.CompileOptions = {
 	filename: str,
